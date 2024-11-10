@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -58,6 +59,10 @@ public class Swerve_drive extends LinearOpMode {
         leftservo.setPosition(0.5);
         rightservo.setPosition(0.5);
 
+        // Needed for the first time to pass through the translation motion loop
+        boolean first_translational = true;
+        double servoPos = 0;
+
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
@@ -92,7 +97,8 @@ public class Swerve_drive extends LinearOpMode {
             double rightStickY = gamepad1.right_stick_y;
             double deadzone = 0;
 
-            // left wheel
+            // Variability
+            double joystick_variability = 0.2;
 
             // leftpodposition = Math.toDegrees(Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x));
             //double leftServoPosition = (Math.abs(leftpodposition)); // Map from -1 to 1 range to 0 to 1
@@ -105,6 +111,8 @@ public class Swerve_drive extends LinearOpMode {
 
             left_magnitude = Math.sqrt(Math.pow(leftStickY, 2.0) + Math.pow(leftStickX, 2.0));
             right_magnitude = Math.sqrt(Math.pow(rightStickY, 2.0) + Math.pow(rightStickX, 2.0));
+
+
 
             // avoid singular point for serve position.
             if (left_magnitude < 0.2){
@@ -127,16 +135,19 @@ public class Swerve_drive extends LinearOpMode {
 
             left_forward = 1.0;
             right_forward = 1.0;
-            if (left_theta < 0){
-                left_forward = -1.0;
-                left_theta = left_theta * -1;
-             } else {
-                // left_theta = (left_theta - Math.PI/2) * -1 + Math.PI/2 ;
-                left_theta = Math.PI - left_theta;
-            }
-            if (right_theta < 0){
-                right_forward = -1.0;
-                right_theta = right_theta * -1;
+            if ((left_theta > servoPos - joystick_variability & left_theta < servoPos + joystick_variability) || (first_translational && (leftStickX != 0 || leftStickY != 0))) {
+                if (left_theta < 0){
+                    left_forward = -1.0;
+                    left_theta = left_theta * -1;
+                 } else {
+                    // left_theta = (left_theta - Math.PI/2) * -1 + Math.PI/2 ;
+                    left_theta = Math.PI - left_theta;
+                }
+                if (right_theta < 0){
+                    right_forward = -1.0;
+                    right_theta = right_theta * -1;
+                }
+                servoPos = left_theta;
             }
 
             leftservo.setPosition(left_theta / Math.PI);
