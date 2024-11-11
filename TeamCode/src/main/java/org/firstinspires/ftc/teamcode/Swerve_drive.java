@@ -27,7 +27,7 @@ public class Swerve_drive extends LinearOpMode {
     public double left_magnitude, right_magnitude;
     public double left_forward, right_forward;
 
-    public double magnitude_gain;
+    public double magnitude_gain = 0.5;
     public float rightwheelposition;
 
     //    @Override
@@ -64,6 +64,7 @@ public class Swerve_drive extends LinearOpMode {
             // Setup variables for motor power
             boolean leftMotorForward = true;
             boolean rightMotorForward = true;
+            boolean leftjoystickactive = true;
             double leftPower;
             double rightPower;
             double radius;
@@ -110,6 +111,7 @@ public class Swerve_drive extends LinearOpMode {
             if (left_magnitude < 0.2){
                 left_theta = prev_left_theta;
                 right_theta = prev_right_theta;
+                leftjoystickactive = false;
             }
             else{
                 prev_left_theta = left_theta;
@@ -127,28 +129,38 @@ public class Swerve_drive extends LinearOpMode {
 
             left_forward = 1.0;
             right_forward = 1.0;
-            if (left_theta < 0){
-                left_forward = -1.0;
-                left_theta = left_theta * -1;
-             } else {
-                // left_theta = (left_theta - Math.PI/2) * -1 + Math.PI/2 ;
-                left_theta = Math.PI - left_theta;
-            }
-            if (right_theta < 0){
-                right_forward = -1.0;
-                right_theta = right_theta * -1;
+            if (left_magnitude > 0.2) {
+                if (left_theta < 0){
+                    left_forward = -1.0;
+                    left_theta = left_theta * -1;
+                 } else {
+                    // left_theta = (left_theta - Math.PI/2) * -1 + Math.PI/2 ;
+                    left_theta = Math.PI - left_theta;
+                }
+                if (right_theta < 0){
+                    right_forward = -1.0;
+                    right_theta = right_theta * -1;
+                }
+                leftservo.setPosition(left_theta / Math.PI);
+                // synchronzied with left joystick
+                rightservo.setPosition(left_theta / Math.PI);
+                // independent
+                // rightservo.setPosition(right_theta / Math.PI);
+
+                leftwheel.setPower(left_forward*left_magnitude * magnitude_gain);
+                // synchronzied with left joystick
+                rightwheel.setPower(left_forward*left_magnitude * magnitude_gain);
             }
 
-            leftservo.setPosition(left_theta / Math.PI);
-            // synchronzied with left joystick
-            rightservo.setPosition(left_theta / Math.PI);
-            // independent
-            // rightservo.setPosition(right_theta / Math.PI);
+            if (right_magnitude > 0.2){
+                magnitude_gain = 0.5;
+                leftservo.setPosition(0.5);
+                rightservo.setPosition(0.5);
+                leftwheel.setPower(rightStickX * magnitude_gain);
+                rightwheel.setPower(rightStickX * -1 * magnitude_gain);
+            }
 
-            magnitude_gain = 0.5;
-            leftwheel.setPower(left_forward*left_magnitude * magnitude_gain);
-            // synchronzied with left joystick
-            rightwheel.setPower(left_forward*left_magnitude * magnitude_gain);
+
             // independent
             // rightwheel.setPower(right_forward*right_magnitude * magnitude_gain);
 
