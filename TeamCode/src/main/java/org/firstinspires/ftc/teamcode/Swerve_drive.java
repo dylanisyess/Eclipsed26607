@@ -108,34 +108,33 @@ public class Swerve_drive extends LinearOpMode {
             right_magnitude = Math.sqrt(Math.pow(rightStickY, 2.0) + Math.pow(rightStickX, 2.0));
 
             // avoid singular point for serve position.
-            if (left_magnitude < 0.2 && (prev_left_theta < left_theta + 0.2 || prev_left_theta > left_theta-0.2)){
+            if (left_magnitude < 0.2 && (prev_left_theta < left_theta + 0.2 || prev_left_theta > left_theta - 0.2)) {
                 left_theta = prev_left_theta;
                 leftjoystickactive = true;
-            }
-            else{
+            } else {
                 prev_left_theta = left_theta;
             }
 
-            telemetry.addData( "Left stick x", leftStickX);
-            telemetry.addData( "Left stick y", leftStickY);
+            telemetry.addData("Left stick x", leftStickX);
+            telemetry.addData("Left stick y", leftStickY);
             telemetry.addData("Right Stick x", rightStickX);
             telemetry.addData("Right Stick y", rightStickY);
-            telemetry.addData( "Left stick theta", left_theta);
+            telemetry.addData("Left stick theta", left_theta);
             telemetry.addData("Right Stick theta", right_theta);
-            telemetry.addData( "Left stick mag", left_magnitude);
+            telemetry.addData("Left stick mag", left_magnitude);
             telemetry.addData("Right Stick mag", right_magnitude);
 
             left_forward = 1.0;
             right_forward = 1.0;
             if (leftjoystickactive) {
-                if (left_theta < 0){
+                if (left_theta < 0) {
                     left_forward = -1.0;
                     left_theta = left_theta * -1;
-                 } else {
+                } else {
                     // left_theta = (left_theta - Math.PI/2) * -1 + Math.PI/2 ;
                     left_theta = Math.PI - left_theta;
                 }
-                if (right_theta < 0){
+                if (right_theta < 0) {
                     right_forward = -1.0;
                     right_theta = right_theta * -1;
                 }
@@ -145,12 +144,12 @@ public class Swerve_drive extends LinearOpMode {
                 // independent
                 // rightservo.setPosition(right_theta / Math.PI);
 
-                leftwheel.setPower(left_forward*left_magnitude * magnitude_gain);
+                leftwheel.setPower(left_forward * left_magnitude * magnitude_gain);
                 // synchronzied with left joystick
-                rightwheel.setPower(left_forward*left_magnitude * magnitude_gain);
+                rightwheel.setPower(left_forward * left_magnitude * magnitude_gain);
             }
 
-            if (right_magnitude > 0.2){
+            if (right_magnitude > 0.2) {
                 magnitude_gain = 0.5;
                 leftservo.setPosition(0.5);
                 rightservo.setPosition(0.5);
@@ -163,129 +162,30 @@ public class Swerve_drive extends LinearOpMode {
             // rightwheel.setPower(right_forward*right_magnitude * magnitude_gain);
 
 
-
-            telemetry.addData("Left Servo Position",leftservo.getPosition());
-            telemetry.addData("Right Servo Position",rightservo.getPosition());
+            telemetry.addData("Left Servo Position", leftservo.getPosition());
+            telemetry.addData("Right Servo Position", rightservo.getPosition());
             telemetry.update();
             idle();
 
-//            // Quadrant 1
 //
-//            if (leftStickY > 0 && rightStickX > 0) {
-//                if (Math.abs(leftStickX) > deadzone) {
-//                    leftservo.setPosition(leftServoPosition + 0.5);
-//                }
-//                if (gamepad1.left_bumper) {
-//                    leftservo.setPosition(0.5);
-//                }
-//                // right wheel
-//
-//                if (Math.abs(rightStickX) > deadzone) {
-//                    rightservo.setPosition(rightServoPosition + 0.5);
-//                }
-//                if (gamepad1.right_bumper) {
-//                    rightservo.setPosition(0.5);
-//                }
-//            }
-//            // quadrant 2
-//
-//            if (leftStickY > 0 && rightStickX < 0) {
-//                if (Math.abs(leftStickX) > deadzone) {
-//                    leftservo.setPosition(leftServoPosition);
-//                }
-//                if (gamepad1.left_bumper) {
-//                    leftservo.setPosition(0.5);
-//                }
-//                // right wheel
-//
-//                if (Math.abs(rightStickX) > deadzone) {
-//                    rightservo.setPosition(rightServoPosition);
-//                }
-//                if (gamepad1.right_bumper) {
-//                    rightservo.setPosition(0.5);
-//                }
-//                // quadrant 3
-//
-//                if (leftStickY < 0 && rightStickX < 0) ;
-//                if (Math.abs(leftStickX) > deadzone) {
-//                    leftservo.setPosition(leftServoPosition + 0.5);
-//                }
-//                if (gamepad1.left_bumper) {
-//                    leftservo.setPosition(0.5);
-//                }
-//                // right wheel
-//
-//                if (Math.abs(rightStickX) > deadzone) {
-//                    rightservo.setPosition(rightServoPosition + 0.5);
-//                }
-//                if (gamepad1.right_bumper) {
-//                    rightservo.setPosition(0.5);
-//                }
-//                // quadrant 4
-//
-//                if (leftStickY < 0 && rightStickX > 0) ;
-//                if (Math.abs(leftStickX) > deadzone) {
-//                    leftservo.setPosition(leftServoPosition);
-//                }
-//
-//                if (gamepad1.left_bumper) {
-//                    leftservo.setPosition(0.5);
-//                }
-//
-//                // right wheel
-//
-//                if (Math.abs(rightStickX) > deadzone) {
-//                    rightservo.setPosition(rightServoPosition);
-//                }
-//
-//                if (gamepad1.right_bumper) {
-//                    rightservo.setPosition(0.5);
-//                }
 
-//            } else {
-//                leftservo.setPosition(0.5); // Neutral position
-//                double leftServoPosition = (leftStickX + 1) / 2; // Map from -1 to 1 range to 0 to 1
-//                leftservo.setPosition(leftServoPosition);
-//            }
+            // Telemetry to display key data
 
-//            if (Math.abs(rightStickX) > deadzone) {
-//                double rightServoPosition = (rightStickX + 1) / 2; // Map from -1 to 1 range to 0 to 1
-//                rightservo.setPosition(rightServoPosition);
-//            } else {
-//                rightservo.setPosition(0.5); // Neutral position
-//                double rightServoPosition = (rightStickX + 1) / 2; // Map from -1 to 1 range to 0 to 1
-//                rightservo.setPosition(rightServoPosition);
-        }
+//    @Override
 
-        // Send calculated power to wheels
-//            if (leftMotorForward == true){
-//                leftwheel.setPower(leftPower);
-//            }else{
-//                leftwheel.setPower(-leftPower);
-//            }
-//
-//            if (rightMotorForward == true){
-//                rightwheel.setPower(rightPower);
-//            }else{
-//                rightwheel.setPower(-rightPower);
-    }
-
-    // Telemetry to display key data
-
-    @Override
-    public void updateTelemetry(Telemetry telemetry) {
-        telemetry.addData("Status","Run Time: "+ runtime.toString());
+            telemetry.addData("Status", "Run Time: " + runtime.toString());
 //        telemetry.addData("Left Motor Power",leftPower);
 //        telemetry.addData("Right Motor Power",rightPower);
-        telemetry.addData("Left Servo Position",leftservo.getPosition());
-        telemetry.addData("Right Servo Position",rightservo.getPosition());
-        telemetry.addData("Left pod position",leftpodposition);
+            telemetry.addData("Left Servo Position", leftservo.getPosition());
+            telemetry.addData("Right Servo Position", rightservo.getPosition());
+            telemetry.addData("Left pod position", leftpodposition);
 //        telemetry.addData("Left Stick X",leftStickX);
 //        telemetry.addData("Right Stick X",rightStickX);
-        telemetry.update();
-        super.updateTelemetry(telemetry);
+            telemetry.update();
+            super.updateTelemetry(telemetry);
+        }
+
+
     }
-
-
 }
 
