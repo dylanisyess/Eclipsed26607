@@ -53,7 +53,7 @@ public class Robot {
         rightwheel = hardwareMap.get(DcMotorEx.class, "rightwheel");
         motors = Arrays.asList(leftwheel, rightwheel);
 
-        leftwheel.setDirection(Direction.REVERSE);
+        leftwheel.setDirection(Direction.FORWARD);
         rightwheel.setDirection(Direction.FORWARD);
 
         imu = hardwareMap.get(IMU.class, "imu");

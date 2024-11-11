@@ -276,12 +276,12 @@ public class RobotDriver {
 
         if (straight) {
             _opMode.telemetry.addData("Motion", "Drive Straight");
-            _opMode.telemetry.addData("Target Pos L:R", "%7d:%7d:%7d:%7d",
-                    leftFrontTarget, leftRearTarget,
-                    rightFrontTarget, rightRearTarget);
-            _opMode.telemetry.addData("Actual Pos L:R", "%7d:%7d:%7d:%7d",
-                    _robot.leftwheel.getCurrentPosition(),
-                    _robot.rightwheel.getCurrentPosition());
+//            _opMode.telemetry.addData("Target Pos L:R", "%7d:%7d:%7d:%7d",
+//                    leftFrontTarget, leftRearTarget,
+//                    rightFrontTarget, rightRearTarget);
+//            _opMode.telemetry.addData("Actual Pos L:R", "%7d:%7d:%7d:%7d",
+//                    _robot.leftwheel.getCurrentPosition(),
+//                    _robot.rightwheel.getCurrentPosition());
         } else {
             _opMode.telemetry.addData("Motion", "Turning");
         }
