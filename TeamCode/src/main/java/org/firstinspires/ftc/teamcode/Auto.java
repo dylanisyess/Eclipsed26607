@@ -13,7 +13,7 @@ public class Auto extends AutonomousBase {
         // Wait for the game to start (driver presses PLAY)
         // Abort this loop is started or stopped.
         setupAndWait();
-        robotDriver.gyroDrive(0.6d, -19d, 0d, 5d, null);
+        robotDriver.gyroDrive(0.6d, -5d, 0d, 5d, null);
         //release to bucket+
         sleep(1000);
     }
