@@ -64,7 +64,7 @@ public class Swerve_drive extends LinearOpMode {
             // Setup variables for motor power
             boolean leftMotorForward = true;
             boolean rightMotorForward = true;
-            boolean leftjoystickactive = true;
+            boolean leftjoystickactive = false;
             double leftPower;
             double rightPower;
             double radius;
@@ -108,14 +108,12 @@ public class Swerve_drive extends LinearOpMode {
             right_magnitude = Math.sqrt(Math.pow(rightStickY, 2.0) + Math.pow(rightStickX, 2.0));
 
             // avoid singular point for serve position.
-            if (left_magnitude < 0.2){
+            if (left_magnitude < 0.2 && (prev_left_theta < left_theta + 0.2 || prev_left_theta > left_theta-0.2)){
                 left_theta = prev_left_theta;
-                right_theta = prev_right_theta;
-                leftjoystickactive = false;
+                leftjoystickactive = true;
             }
             else{
                 prev_left_theta = left_theta;
-                prev_right_theta = right_theta;
             }
 
             telemetry.addData( "Left stick x", leftStickX);
@@ -129,7 +127,7 @@ public class Swerve_drive extends LinearOpMode {
 
             left_forward = 1.0;
             right_forward = 1.0;
-            if (left_magnitude > 0.2) {
+            if (leftjoystickactive) {
                 if (left_theta < 0){
                     left_forward = -1.0;
                     left_theta = left_theta * -1;
