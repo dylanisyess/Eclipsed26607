@@ -29,7 +29,7 @@ import java.util.List;
 
 public class Robot {
     public DcMotorEx leftwheel, rightwheel;
-    public Servo gripServo, handServo;
+    public Servo leftservo, rightservo;
     public DigitalChannel limitSwitch;
     private List<DcMotorEx> motors;
     private Context _appContext;
@@ -52,6 +52,9 @@ public class Robot {
         leftwheel = hardwareMap.get(DcMotorEx.class, "leftwheel");
         rightwheel = hardwareMap.get(DcMotorEx.class, "rightwheel");
         motors = Arrays.asList(leftwheel, rightwheel);
+
+        leftservo = hardwareMap.get(Servo.class, "leftservo");
+        rightservo = hardwareMap.get(Servo.class, "rightservo");
 
         leftwheel.setDirection(Direction.FORWARD);
         rightwheel.setDirection(Direction.FORWARD);
@@ -143,53 +146,53 @@ public class Robot {
         return leftwheel.isBusy() && rightwheel.isBusy();
     }
 
-    public void setGripPosition(double newGripPosition) {
-        if (gripPosition != newGripPosition) {
-            gripPosition = newGripPosition;
-            gripServo.setPosition(gripPosition);
-        }
-    }
+    // public void setGripPosition(double newGripPosition) {
+        // if (gripPosition != newGripPosition) {
+            // gripPosition = newGripPosition;
+            // gripServo.setPosition(gripPosition);
+        // }
+    // }
+// 
+    // public void toggleGrip() {
+        // if (gripPosition == 0.9d) {
+            // setGripPosition(0.5d);
+//    /     // } else {
+            // setGripPosition(0.9d);
+        // }
+    // }
 
-    public void toggleGrip() {
-        if (gripPosition == 0.9d) {
-            setGripPosition(0.5d);
-        } else {
-            setGripPosition(0.9d);
-        }
-    }
+    // public void setHandPosition(double newHandPosition) {
+        // if (handPosition != newHandPosition) {
+            // handPosition = newHandPosition;
+            // handServo.setPosition(handPosition);
+        // }
+    // }
 
-    public void setHandPosition(double newHandPosition) {
-        if (handPosition != newHandPosition) {
-            handPosition = newHandPosition;
-            handServo.setPosition(handPosition);
-        }
-    }
+    // public void toggleHand() {
+        // if (handPosition == 0.42d) {
+            // setHandPosition(0d);
+        // } else {
+            // setHandPosition(0.42d);
+        // }
+    // }
 
-    public void toggleHand() {
-        if (handPosition == 0.42d) {
-            setHandPosition(0d);
-        } else {
-            setHandPosition(0.42d);
-        }
-    }
+    // public void toggleHandMiddle() {
+        // if (handPosition == 0.42d) {
+            // setHandPosition(1d);
+        // } else {
+            // setHandPosition(0.42d);
+        // }
+    // }
 
-    public void toggleHandMiddle() {
-        if (handPosition == 0.42d) {
-            setHandPosition(1d);
-        } else {
-            setHandPosition(0.42d);
-        }
-    }
+    // public void handDown() {
+        // if (handPosition < 1d) {
+            // setHandPosition(handPosition + 0.0025d);
+        // }
+    // }
 
-    public void handDown() {
-        if (handPosition < 1d) {
-            setHandPosition(handPosition + 0.0025d);
-        }
-    }
-
-    public void handUp() {
-        if (handPosition > 0d) {
-            setHandPosition(handPosition - 0.0025d);
+    // public void handUp() {
+        // if (handPosition > 0d) {
+            // setHandPosition(handPosition - 0.0025d);
         }
     }
 }
