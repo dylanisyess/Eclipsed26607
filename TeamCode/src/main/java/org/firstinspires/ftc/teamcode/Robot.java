@@ -194,5 +194,3 @@ public class Robot {
         // if (handPosition > 0d) {
             // setHandPosition(handPosition - 0.0025d);
         }
-    }
-}
