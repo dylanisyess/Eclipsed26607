@@ -72,19 +72,6 @@ public class Swerve_drive extends LinearOpMode {
             rightpodposition = 1;
             leftpodposition = 1;
 
-            // Map the joystick inputs to motor power
-//            leftwheelposition = (gamepad1.left_stick_y);
-//            if (leftwheelposition < 0) {
-//                leftMotorForward = false;
-//            }
-//
-//            if (rightwheelposition < 0) {
-//                rightMotorForward = false;
-//            }
-//
-//            leftPower = Math.sqrt(Math.pow(gamepad1.left_stick_y, 2) + Math.pow(gamepad1.left_stick_x, 2));
-//            rightPower = Math.sqrt(Math.pow(gamepad1.right_stick_y, 2) + Math.pow(gamepad1.right_stick_x, 2));
-
 
             // Apply deadzone for joystick X-axis
             double leftStickX = gamepad1.left_stick_x;
@@ -93,22 +80,16 @@ public class Swerve_drive extends LinearOpMode {
             double rightStickY = gamepad1.right_stick_y;
             double deadzone = 0;
 
-            // left wheel
-
-            // leftpodposition = Math.toDegrees(Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x));
-            //double leftServoPosition = (Math.abs(leftpodposition)); // Map from -1 to 1 range to 0 to 1
-            //rightpodposition = Math.toDegrees(Math.atan2(gamepad1.right_stick_y, gamepad1.right_stick_x));
-            //double rightServoPosition = (Math.abs(rightpodposition)); // Map from -1 to 1 range to 0 to 1
-
 
             left_theta = -Math.atan2(leftStickY, leftStickX);
             right_theta = -Math.atan2(rightStickY, rightStickX);
+
 
             left_magnitude = Math.sqrt(Math.pow(leftStickY, 2.0) + Math.pow(leftStickX, 2.0));
             right_magnitude = Math.sqrt(Math.pow(rightStickY, 2.0) + Math.pow(rightStickX, 2.0));
 
             // avoid singular point for serve position.
-            if (left_magnitude < 0.2 && (prev_left_theta < left_theta + 0.2 || prev_left_theta > left_theta - 0.2)) {
+            if (left_magnitude > 0.2 && (prev_left_theta < left_theta + 0.2 || prev_left_theta > left_theta - 0.2)) {
                 left_theta = prev_left_theta;
                 leftjoystickactive = true;
             } else {
@@ -147,14 +128,15 @@ public class Swerve_drive extends LinearOpMode {
                 leftwheel.setPower(left_forward * left_magnitude * magnitude_gain);
                 // synchronzied with left joystick
                 rightwheel.setPower(left_forward * left_magnitude * magnitude_gain);
-            }
-
-            if (right_magnitude > 0.2) {
+            } else if (right_magnitude > 0.2 && !leftjoystickactive) {
                 magnitude_gain = 0.5;
                 leftservo.setPosition(0.5);
                 rightservo.setPosition(0.5);
                 leftwheel.setPower(rightStickX * magnitude_gain);
                 rightwheel.setPower(rightStickX * -1 * magnitude_gain);
+            } else {
+                leftwheel.setPower(0);
+                rightwheel.setPower(0);
             }
 
 
@@ -168,24 +150,11 @@ public class Swerve_drive extends LinearOpMode {
             idle();
 
 //
-
-            // Telemetry to display key data
-
-//    @Override
-
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-//        telemetry.addData("Left Motor Power",leftPower);
-//        telemetry.addData("Right Motor Power",rightPower);
-            telemetry.addData("Left Servo Position", leftservo.getPosition());
-            telemetry.addData("Right Servo Position", rightservo.getPosition());
-            telemetry.addData("Left pod position", leftpodposition);
-//        telemetry.addData("Left Stick X",leftStickX);
-//        telemetry.addData("Right Stick X",rightStickX);
-            telemetry.update();
-            super.updateTelemetry(telemetry);
         }
+
+        // Telemetry to display key data
 
 
     }
-}
 
+}

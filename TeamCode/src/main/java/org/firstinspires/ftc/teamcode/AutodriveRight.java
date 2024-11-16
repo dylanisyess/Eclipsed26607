@@ -55,9 +55,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Robot left", group="Robot")
+@Autonomous(name="Robot right", group="Robot")
 //@Disabled
-public class AutodriveLeft extends LinearOpMode {
+public class AutodriveRight extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor         leftwheel   = null;
@@ -74,7 +74,7 @@ public class AutodriveLeft extends LinearOpMode {
     static final double     FORWARD_SPEED = 0.6;
     static final double     TURN_SPEED    = 0.5;
 
-//    @Override
+    @Override
     public void runOpMode() {
 
         // Initialize the drive system variables.
@@ -101,6 +101,16 @@ public class AutodriveLeft extends LinearOpMode {
 
         // Step through each leg of the path, ensuring that the OpMode has not been stopped along the way.
 
+        leftservo.setPosition(0.45);
+        rightservo.setPosition(0.55);
+        leftwheel.setPower(0.4);
+        rightwheel.setPower(0.4);
+
+        sleep(200);
+
+        leftwheel.setPower(0);
+        rightwheel.setPower(0);
+
         // go right
 
         leftservo.setPosition(1);
@@ -108,10 +118,10 @@ public class AutodriveLeft extends LinearOpMode {
 
         sleep(2000);
 
-        leftwheel.setPower(0.4);
-        rightwheel.setPower(0.4);
+        leftwheel.setPower(-0.4);
+        rightwheel.setPower(-0.4);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.8)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.9)) {
             telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
@@ -120,19 +130,22 @@ public class AutodriveLeft extends LinearOpMode {
         rightwheel.setPower(0);
 
 //        go foward
-        leftservo.setPosition(0.45);
-        rightservo.setPosition(0.55);
-        arm.setPosition(0.7);
-        tilt.setPosition(0.5);
-        grabber.setPosition(0);
+        leftservo.setPosition(0.5);
+        rightservo.setPosition(0.45);
 
         sleep(1000);
+
+        arm.setPosition(0.7);
+        tilt.setPosition(0.9);
+        grabber.setPosition(0.7);
+
+        sleep(2000);
 
         leftwheel.setPower(0.4);
         rightwheel.setPower(0.4);
 
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
             telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
@@ -140,6 +153,9 @@ public class AutodriveLeft extends LinearOpMode {
         // Step 4:  Stop
         leftwheel.setPower(0);
         rightwheel.setPower(0);
+
+        sleep(3000);
+        tilt.setPosition(0.7);
 
 
         telemetry.addData("Path", "Complete");
