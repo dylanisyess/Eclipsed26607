@@ -74,7 +74,7 @@ public class AutodriveRight extends LinearOpMode {
     static final double     FORWARD_SPEED = 0.6;
     static final double     TURN_SPEED    = 0.5;
 
-    @Override
+//    @Override
     public void runOpMode() {
 
         // Initialize the drive system variables.
@@ -101,8 +101,11 @@ public class AutodriveRight extends LinearOpMode {
 
         // Step through each leg of the path, ensuring that the OpMode has not been stopped along the way.
 
-        leftservo.setPosition(0.45);
-        rightservo.setPosition(0.55);
+        leftservo.setPosition(0.5);
+        rightservo.setPosition(0.5);
+
+        sleep(500);
+
         leftwheel.setPower(0.4);
         rightwheel.setPower(0.4);
 
@@ -118,10 +121,10 @@ public class AutodriveRight extends LinearOpMode {
 
         sleep(2000);
 
-        leftwheel.setPower(-0.4);
-        rightwheel.setPower(-0.4);
+        leftwheel.setPower(0.4);
+        rightwheel.setPower(0.4);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.9)) {
+        while (opModeIsActive() && (runtime.seconds() < 2)) {
             telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
@@ -130,32 +133,32 @@ public class AutodriveRight extends LinearOpMode {
         rightwheel.setPower(0);
 
 //        go foward
-        leftservo.setPosition(0.5);
-        rightservo.setPosition(0.45);
-
-        sleep(1000);
-
-        arm.setPosition(0.7);
-        tilt.setPosition(0.9);
-        grabber.setPosition(0.7);
-
-        sleep(2000);
-
-        leftwheel.setPower(0.4);
-        rightwheel.setPower(0.4);
-
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
-            telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-
+//        leftservo.setPosition(0.5);
+//        rightservo.setPosition(0.45);
+//
+//        sleep(1000);
+//
+//        arm.setPosition(0.7);
+//        tilt.setPosition(0.9);
+//        grabber.setPosition(0.7);
+//
+//        sleep(2000);
+//
+//        leftwheel.setPower(0.4);
+//        rightwheel.setPower(0.4);
+//
+//        runtime.reset();
+//        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
+//            telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
+//            telemetry.update();
+//        }
+//
         // Step 4:  Stop
-        leftwheel.setPower(0);
-        rightwheel.setPower(0);
-
-        sleep(3000);
-        tilt.setPosition(0.7);
+//        leftwheel.setPower(0);
+//        rightwheel.setPower(0);
+//
+//        sleep(3000);
+//        tilt.setPosition(0.7);
 
 
         telemetry.addData("Path", "Complete");

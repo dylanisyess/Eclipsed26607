@@ -100,7 +100,18 @@ public class AutodriveLeft extends LinearOpMode {
         waitForStart();
 
         // Step through each leg of the path, ensuring that the OpMode has not been stopped along the way.
+        leftservo.setPosition(0.5);
+        rightservo.setPosition(0.5);
 
+        sleep(500);
+
+        leftwheel.setPower(0.4);
+        rightwheel.setPower(0.4);
+
+        sleep(200);
+
+        leftwheel.setPower(0);
+        rightwheel.setPower(0);
         // go right
 
         leftservo.setPosition(1);
@@ -111,7 +122,7 @@ public class AutodriveLeft extends LinearOpMode {
         leftwheel.setPower(0.4);
         rightwheel.setPower(0.4);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.8)) {
+        while (opModeIsActive() && (runtime.seconds() < 3)) {
             telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
@@ -120,26 +131,26 @@ public class AutodriveLeft extends LinearOpMode {
         rightwheel.setPower(0);
 
 //        go foward
-        leftservo.setPosition(0.45);
-        rightservo.setPosition(0.55);
-        arm.setPosition(0.7);
-        tilt.setPosition(0.5);
-        grabber.setPosition(0);
-
-        sleep(1000);
-
-        leftwheel.setPower(0.4);
-        rightwheel.setPower(0.4);
-
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1)) {
-            telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-
-        // Step 4:  Stop
-        leftwheel.setPower(0);
-        rightwheel.setPower(0);
+//        leftservo.setPosition(0.45);
+//        rightservo.setPosition(0.55);
+//        arm.setPosition(0.7);
+//        tilt.setPosition(0.5);
+//        grabber.setPosition(0);
+//
+//        sleep(1000);
+//
+//        leftwheel.setPower(0.4);
+//        rightwheel.setPower(0.4);
+//
+//        runtime.reset();
+//        while (opModeIsActive() && (runtime.seconds() < 1)) {
+//            telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
+//            telemetry.update();
+//        }
+//
+//         Step 4:  Stop
+//        leftwheel.setPower(0);
+//        rightwheel.setPower(0);
 
 
         telemetry.addData("Path", "Complete");

@@ -164,21 +164,31 @@ public class Teleop_final extends LinearOpMode {
 
 
 
-            while (gamepad1.dpad_left) {
-                tilt_position = tilt.getPosition();
-                tilt.setPosition(tilt_position + 0.01);
-            }
-
-            while (gamepad1.dpad_right) {
-                tilt_position = tilt.getPosition();
-                tilt.setPosition(tilt_position - 0.01);
-            }
+//            while (gamepad1.dpad_left) {
+//                tilt_position = tilt.getPosition();
+//                tilt.setPosition(tilt_position + 0.01);
+//            }
+//
+//            while (gamepad1.dpad_right) {
+//                tilt_position = tilt.getPosition();
+//                tilt.setPosition(tilt_position - 0.01);
+//            }
 
             if (gamepad1.y) {
-                tilt.setPosition(0.5);
+                tilt.setPosition(0.6);
             }
 //
             if (gamepad1.a) {
+                tilt.setPosition(0.5);
+                sleep(50);
+                tilt.setPosition(0.4);
+                sleep(50);
+                tilt.setPosition(0.3);
+                sleep(50);
+                tilt.setPosition(0.2);
+                sleep(50);
+                tilt.setPosition(0.1);
+                sleep(50);
                 tilt.setPosition(0);
             }
 

@@ -89,7 +89,7 @@ public class Swerve_drive extends LinearOpMode {
             right_magnitude = Math.sqrt(Math.pow(rightStickY, 2.0) + Math.pow(rightStickX, 2.0));
 
             // avoid singular point for serve position.
-            if (left_magnitude > 0.2 && (prev_left_theta < left_theta + 0.2 || prev_left_theta > left_theta - 0.2)) {
+            if (left_magnitude > 0.2 && ((prev_left_theta < (left_theta + 0.2)) || (prev_left_theta > (left_theta - 0.2)))) {
                 left_theta = prev_left_theta;
                 leftjoystickactive = true;
             } else {

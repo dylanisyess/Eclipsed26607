@@ -16,6 +16,7 @@ public class Arm extends LinearOpMode {
     public Servo grabber;
     public Servo tilt;
     public double tilt_position;
+    public double tilt_add;
     public Servo arm;
     public double arm_position;
     private double i;
@@ -45,48 +46,51 @@ public class Arm extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
+            while (gamepad1.dpad_left) {
+                tilt_position = tilt.getPosition();
+                tilt.setPosition(tilt_position + 0.01);
+            }
+
+            while (gamepad1.dpad_right) {
+                tilt_position = tilt.getPosition();
+                tilt.setPosition(tilt_position - 0.01);
+            }
+
             if (gamepad1.y) {
                 tilt.setPosition(0.5);
             }
 //
             if (gamepad1.a) {
-                tilt.setPosition(0.3);
+                tilt.setPosition(0);
             }
 
-//            tilt_position = ((gamepad1.left_stick_y + 1)/2);
-//            tilt.setPosition(tilt_position);
-
-//            close
             if (gamepad1.x) {
                 grabber.setPosition(0);
             }
-//          open
+
             if (gamepad1.b) {
-                grabber.setPosition(0.7);
+                grabber.setPosition(1);
             }
 
             if (gamepad1.dpad_up) {
                 arm.setPosition(0);
+                tilt.setPosition(0.5);
             }
 
             if (gamepad1.dpad_down) {
                 arm.setPosition(0.9);
+                tilt.setPosition(0);
             }
 
-//            if (gamepad1.dpad_up) {
-//                arm_position = arm.getPosition();
-//                arm.setPosition(arm_position + 0.005);
-//            }
-//
-//            if (gamepad1.dpad_down) {
-//                arm_position = arm.getPosition();
-//                arm.setPosition(arm_position - 0.005);
-//            }
+            while (gamepad1.right_bumper) {
+                arm_position = arm.getPosition();
+                arm.setPosition(arm_position + 0.01);
+            }
 
-//            if (gamepad1.right_bumper) {
-//                arm.setPosition(arm_position);
-//                tilt.setPosition(tilt_position);
-//            }
+            while (gamepad1.left_bumper) {
+                arm_position = arm.getPosition();
+                arm.setPosition(arm_position - 0.01);
+            }
 
             // Telemetry to display key data
             telemetry.addData("Status", "Run Time: " + runtime.toString());
