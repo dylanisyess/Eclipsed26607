@@ -53,6 +53,8 @@ public class PID_auto extends LinearOpMode {
         rightwheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftwheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightwheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftwheel.setDirection(DcMotor.Direction.REVERSE);
+        rightwheel.setDirection(DcMotor.Direction.FORWARD);
 
         waitForStart();
 
