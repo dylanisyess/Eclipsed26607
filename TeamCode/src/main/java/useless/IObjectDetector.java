@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package useless;
 
 public interface IObjectDetector<T> {
     T objectDetected();

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package useless;
 
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;

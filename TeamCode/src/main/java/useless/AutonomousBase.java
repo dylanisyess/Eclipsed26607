@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package useless;
 
 public abstract class AutonomousBase extends OpModeBase {
     protected RobotDriver robotDriver;

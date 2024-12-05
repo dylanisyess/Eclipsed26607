@@ -77,6 +77,7 @@ public class Arm extends LinearOpMode {
                 tilt.setPosition(0.5);
             }
 
+
             if (gamepad1.dpad_down) {
                 arm.setPosition(0.9);
                 tilt.setPosition(0);
