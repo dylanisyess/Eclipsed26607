@@ -102,24 +102,31 @@ public class auto extends LinearOpMode {
         leftservo.setPosition(1);
         rightservo.setPosition(1);
 
-        leftwheel.setPower(0.4);
-        rightwheel.setPower(0.4);
-        sleep(100);
+        sleep(2000);
+
+        leftwheel.setPower(0.3);
+        rightwheel.setPower(0.3);
+        sleep(200);
         leftwheel.setPower(0);
         rightwheel.setPower(0);
 
         leftservo.setPosition(0.5);
         rightservo.setPosition(0.5);
 
+        sleep(500);
+
         leftwheel.setPower(0.4);
         rightwheel.setPower(0.4);
-        sleep(3000);
+        sleep(1000);
         leftwheel.setPower(0);
         rightwheel.setPower(0);
 
         rightwheel.setPower(0.3);
         sleep(100);
-        rightwheel.setPower(0.3);
+        rightwheel.setPower(0);
+
+
+
 
 
 
