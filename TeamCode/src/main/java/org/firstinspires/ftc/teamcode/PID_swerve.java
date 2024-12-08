@@ -27,6 +27,7 @@ public class PID_swerve extends LinearOpMode {
     public double leftMotorPower, rightMotorPower;
     public double leftServoTarget, rightServoTarget;
     public double leftServoPower, rightServoPower;
+    public boolean moving;
 
     public double magnitude_gain = 0.5;
     public float rightwheelposition;
@@ -56,6 +57,7 @@ public class PID_swerve extends LinearOpMode {
 
         leftservo.setPosition(0.5);
         rightservo.setPosition(0.5);
+        moving = false;
 
         while (opModeIsActive()) {
 
@@ -138,6 +140,57 @@ public class PID_swerve extends LinearOpMode {
             } else {
                 leftwheel.setPower(0);
                 rightwheel.setPower(0);
+
+                if (gamepad1.dpad_up) {
+                    if (!moving) {
+                        leftservo.setPosition(0.5);
+                        rightservo.setPosition(0.5);
+                        leftwheel.setPower(0.1);
+                        rightwheel.setPower(0.1);
+                    } else {
+                        leftwheel.setPower(0);
+                        rightwheel.setPower(0);
+                    }
+                }
+
+                if (gamepad1.dpad_down) {
+                    if (!moving) {
+                        leftservo.setPosition(0.5);
+                        rightservo.setPosition(0.5);
+                        leftwheel.setPower(-0.1);
+                        rightwheel.setPower(-0.1);
+                    } else {
+                        leftwheel.setPower(0);
+                        rightwheel.setPower(0);
+                    }
+                }
+
+                if (gamepad1.dpad_left) {
+                    if (!moving) {
+                        leftservo.setPosition(0);
+                        rightservo.setPosition(0);
+                        leftwheel.setPower(0.1);
+                        rightwheel.setPower(0.1);
+                    } else {
+                        leftwheel.setPower(0);
+                        rightwheel.setPower(0);
+                    }
+                }
+
+                if (gamepad1.dpad_right) {
+                    if (!moving) {
+                        leftservo.setPosition(1);
+                        rightservo.setPosition(1);
+                        leftwheel.setPower(0.1);
+                        rightwheel.setPower(0.1);
+                    } else {
+                        leftwheel.setPower(0);
+                        rightwheel.setPower(0);
+                    }
+                }
+
+
+
             }
 
             // telemetry
