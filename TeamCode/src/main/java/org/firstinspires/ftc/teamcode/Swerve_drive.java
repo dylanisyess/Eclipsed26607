@@ -26,6 +26,7 @@ public class Swerve_drive extends LinearOpMode {
     public double left_theta, right_theta, prev_left_theta, prev_right_theta;
     public double left_magnitude, right_magnitude;
     public double left_forward, right_forward;
+    public boolean moving;
 
     public double magnitude_gain = 0.5;
     public float rightwheelposition;
@@ -57,6 +58,7 @@ public class Swerve_drive extends LinearOpMode {
         // Set the initial servo positions to neutral (mid-point).
         leftservo.setPosition(0.5);
         rightservo.setPosition(0.5);
+        moving = false;
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
@@ -96,14 +98,14 @@ public class Swerve_drive extends LinearOpMode {
                 prev_left_theta = left_theta;
             }
 
-            telemetry.addData("Left stick x", leftStickX);
-            telemetry.addData("Left stick y", leftStickY);
-            telemetry.addData("Right Stick x", rightStickX);
-            telemetry.addData("Right Stick y", rightStickY);
-            telemetry.addData("Left stick theta", left_theta);
-            telemetry.addData("Right Stick theta", right_theta);
-            telemetry.addData("Left stick mag", left_magnitude);
-            telemetry.addData("Right Stick mag", right_magnitude);
+//            telemetry.addData("Left stick x", leftStickX);
+//            telemetry.addData("Left stick y", leftStickY);
+//            telemetry.addData("Right Stick x", rightStickX);
+//            telemetry.addData("Right Stick y", rightStickY);
+//            telemetry.addData("Left stick theta", left_theta);
+//            telemetry.addData("Right Stick theta", right_theta);
+//            telemetry.addData("Left stick mag", left_magnitude);
+//            telemetry.addData("Right Stick mag", right_magnitude);
 
             left_forward = 1.0;
             right_forward = 1.0;
@@ -137,6 +139,54 @@ public class Swerve_drive extends LinearOpMode {
             } else {
                 leftwheel.setPower(0);
                 rightwheel.setPower(0);
+
+                if (gamepad1.dpad_up) {
+                    if (!moving) {
+                        leftservo.setPosition(0.5);
+                        rightservo.setPosition(0.5);
+                        leftwheel.setPower(0.4);
+                        rightwheel.setPower(0.4);
+                    } else {
+                        leftwheel.setPower(0);
+                        rightwheel.setPower(0);
+                    }
+                }
+
+                if (gamepad1.dpad_down) {
+                    if (!moving) {
+                        leftservo.setPosition(0.5);
+                        rightservo.setPosition(0.5);
+                        leftwheel.setPower(-0.4);
+                        rightwheel.setPower(-0.4);
+                    } else {
+                        leftwheel.setPower(0);
+                        rightwheel.setPower(0);
+                    }
+                }
+
+                if (gamepad1.dpad_left) {
+                    if (!moving) {
+                        leftservo.setPosition(0);
+                        rightservo.setPosition(0);
+                        leftwheel.setPower(0.4);
+                        rightwheel.setPower(0.4);
+                    } else {
+                        leftwheel.setPower(0);
+                        rightwheel.setPower(0);
+                    }
+                }
+
+                if (gamepad1.dpad_right) {
+                    if (!moving) {
+                        leftservo.setPosition(1);
+                        rightservo.setPosition(1);
+                        leftwheel.setPower(0.4);
+                        rightwheel.setPower(0.4);
+                    } else {
+                        leftwheel.setPower(0);
+                        rightwheel.setPower(0);
+                    }
+                }
             }
 
 
@@ -146,6 +196,7 @@ public class Swerve_drive extends LinearOpMode {
 
             telemetry.addData("Left Servo Position", leftservo.getPosition());
             telemetry.addData("Right Servo Position", rightservo.getPosition());
+            telemetry.addData("moving?", moving );
             telemetry.update();
             idle();
 

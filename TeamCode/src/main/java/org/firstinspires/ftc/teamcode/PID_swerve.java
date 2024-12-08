@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -7,8 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.arcrobotics.ftclib.controller.PIDController;
 
-@TeleOp(name="Swerve_drive", group="Linear OpMode")
-// @Disabled
+@TeleOp(name="PIDSwerve_drive", group="Linear OpMode")
+ @Disabled
 public class PID_swerve extends LinearOpMode {
 
     // Declare OpMode members.

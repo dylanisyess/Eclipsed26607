@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous(name = "Auto left", preselectTeleOp = "Gamepad")
+@Autonomous(name = "Auto", preselectTeleOp = "Gamepad")
 @Disabled
 public class AutoLeft extends AutonomousBase {
     @Override

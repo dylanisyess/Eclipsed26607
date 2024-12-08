@@ -27,10 +27,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package useless;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -55,9 +54,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Robot left", group="Robot")
+@Autonomous(name="Robot right", group="Robot")
 //@Disabled
-public class AutodriveLeft extends LinearOpMode {
+public class AutodriveRight extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor         leftwheel   = null;
@@ -100,6 +99,7 @@ public class AutodriveLeft extends LinearOpMode {
         waitForStart();
 
         // Step through each leg of the path, ensuring that the OpMode has not been stopped along the way.
+
         leftservo.setPosition(0.5);
         rightservo.setPosition(0.5);
 
@@ -112,6 +112,7 @@ public class AutodriveLeft extends LinearOpMode {
 
         leftwheel.setPower(0);
         rightwheel.setPower(0);
+
         // go right
 
         leftservo.setPosition(1);
@@ -122,7 +123,7 @@ public class AutodriveLeft extends LinearOpMode {
         leftwheel.setPower(0.4);
         rightwheel.setPower(0.4);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 3)) {
+        while (opModeIsActive() && (runtime.seconds() < 2)) {
             telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
@@ -131,26 +132,32 @@ public class AutodriveLeft extends LinearOpMode {
         rightwheel.setPower(0);
 
 //        go foward
-//        leftservo.setPosition(0.45);
-//        rightservo.setPosition(0.55);
-//        arm.setPosition(0.7);
-//        tilt.setPosition(0.5);
-//        grabber.setPosition(0);
+//        leftservo.setPosition(0.5);
+//        rightservo.setPosition(0.45);
 //
 //        sleep(1000);
+//
+//        arm.setPosition(0.7);
+//        tilt.setPosition(0.9);
+//        grabber.setPosition(0.7);
+//
+//        sleep(2000);
 //
 //        leftwheel.setPower(0.4);
 //        rightwheel.setPower(0.4);
 //
 //        runtime.reset();
-//        while (opModeIsActive() && (runtime.seconds() < 1)) {
+//        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
 //            telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
 //            telemetry.update();
 //        }
 //
-//         Step 4:  Stop
+        // Step 4:  Stop
 //        leftwheel.setPower(0);
 //        rightwheel.setPower(0);
+//
+//        sleep(3000);
+//        tilt.setPosition(0.7);
 
 
         telemetry.addData("Path", "Complete");

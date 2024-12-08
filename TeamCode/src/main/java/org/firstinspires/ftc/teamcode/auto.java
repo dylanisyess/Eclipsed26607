@@ -30,7 +30,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -55,9 +54,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Robot right", group="Robot")
+@Autonomous(name="auto", group="Robot")
 //@Disabled
-public class AutodriveRight extends LinearOpMode {
+public class auto extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor         leftwheel   = null;
@@ -100,65 +99,32 @@ public class AutodriveRight extends LinearOpMode {
         waitForStart();
 
         // Step through each leg of the path, ensuring that the OpMode has not been stopped along the way.
+        leftservo.setPosition(1);
+        rightservo.setPosition(1);
+
+        leftwheel.setPower(0.4);
+        rightwheel.setPower(0.4);
+        sleep(100);
+        leftwheel.setPower(0);
+        rightwheel.setPower(0);
 
         leftservo.setPosition(0.5);
         rightservo.setPosition(0.5);
 
-        sleep(500);
-
         leftwheel.setPower(0.4);
         rightwheel.setPower(0.4);
-
-        sleep(200);
-
+        sleep(3000);
         leftwheel.setPower(0);
         rightwheel.setPower(0);
 
-        // go right
+        rightwheel.setPower(0.3);
+        sleep(100);
+        rightwheel.setPower(0.3);
 
-        leftservo.setPosition(1);
-        rightservo.setPosition(1);
 
-        sleep(2000);
 
-        leftwheel.setPower(0.4);
-        rightwheel.setPower(0.4);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 2)) {
-            telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
 
-        leftwheel.setPower(0);
-        rightwheel.setPower(0);
 
-//        go foward
-//        leftservo.setPosition(0.5);
-//        rightservo.setPosition(0.45);
-//
-//        sleep(1000);
-//
-//        arm.setPosition(0.7);
-//        tilt.setPosition(0.9);
-//        grabber.setPosition(0.7);
-//
-//        sleep(2000);
-//
-//        leftwheel.setPower(0.4);
-//        rightwheel.setPower(0.4);
-//
-//        runtime.reset();
-//        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
-//            telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
-//            telemetry.update();
-//        }
-//
-        // Step 4:  Stop
-//        leftwheel.setPower(0);
-//        rightwheel.setPower(0);
-//
-//        sleep(3000);
-//        tilt.setPosition(0.7);
 
 
         telemetry.addData("Path", "Complete");

@@ -17,8 +17,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Config
 
-@Autonomous(name="Robot left", group="Robot")
-//@Disabled
+@Autonomous(name="pid auto", group="Robot")
+//@Disabled`
 public class PID_auto extends LinearOpMode {
     private PIDController controller;
 
@@ -42,11 +42,11 @@ public class PID_auto extends LinearOpMode {
     public void runOpMode() {
         controller = new PIDController(Kp, Ki, Kd);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        leftwheel  = hardwareMap.get(DcMotorEx.class, "leftwheel");
+        leftwheel = hardwareMap.get(DcMotorEx.class, "leftwheel");
         rightwheel = hardwareMap.get(DcMotorEx.class, "rightwheel");
         leftservo = hardwareMap.get(Servo.class, "leftservo");
         rightservo = hardwareMap.get(Servo.class, "rightservo");
-        grabber  = hardwareMap.get(Servo.class, "grabber");
+        grabber = hardwareMap.get(Servo.class, "grabber");
         tilt = hardwareMap.get(Servo.class, "tilt");
         arm = hardwareMap.get(Servo.class, "arm");
         leftwheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -58,6 +58,8 @@ public class PID_auto extends LinearOpMode {
 
         waitForStart();
 
+        leftservo.setPosition(0.5);
+        rightservo.setPosition(0.5);
 
         double power = PIDcontrol(357, leftwheel.getCurrentPosition());
         leftwheel.setPower(power);
