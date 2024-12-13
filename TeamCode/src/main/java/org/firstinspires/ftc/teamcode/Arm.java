@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -17,7 +18,10 @@ public class Arm extends LinearOpMode {
     public Servo tilt;
     public Servo arm;
     private boolean grabbing;
-
+    public Servo slide;
+    public DcMotor intake;
+    public double slide_position;
+    public boolean taking;
     //    @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -27,11 +31,14 @@ public class Arm extends LinearOpMode {
         grabber  = hardwareMap.get(Servo.class, "grabber");
         tilt = hardwareMap.get(Servo.class, "tilt");
         arm = hardwareMap.get(Servo.class, "arm");
+        slide = hardwareMap.get(Servo.class, "slide");
+        intake = hardwareMap.get(DcMotor.class, "intake");
 
         // Set servo directions (keep default).
         grabber.setDirection(Servo.Direction.FORWARD);
         tilt.setDirection(Servo.Direction.FORWARD);
         arm.setDirection(Servo.Direction.FORWARD);
+        taking = false;
 
 
         // Wait for the game to start (driver presses START).
@@ -54,11 +61,6 @@ public class Arm extends LinearOpMode {
             }
 
 
-            if (gamepad1.a) {
-                arm.setPosition(1);
-                tilt.setPosition(0);
-            }
-
             if (gamepad1.b) {
                 if (!grabbing) {
                     grabber.setPosition(0);
@@ -69,6 +71,26 @@ public class Arm extends LinearOpMode {
                 }
             }
 
+            while (gamepad1.right_bumper) {
+                slide_position = slide.getPosition();
+                slide.setPosition(slide_position + 0.02);
+            }
+
+            while (gamepad1.left_bumper) {
+                slide_position = slide.getPosition();
+                slide.setPosition(slide_position - 0.02);
+            }
+
+            if (gamepad1.a) {
+                if (!taking) {
+                    intake.setPower(1);
+                    taking = true;
+                } else {
+                    intake.setPower(0);
+                    taking = false;
+                }
+            }
+
 
 
             // Telemetry to display key data
@@ -76,6 +98,8 @@ public class Arm extends LinearOpMode {
             telemetry.addData("tilt Servo Position", tilt.getPosition());
             telemetry.addData("grabber Servo Position", grabber.getPosition());
             telemetry.addData("arm Servo Position", arm.getPosition());
+            telemetry.addData("Linear Slide Position", slide.getPosition());
+            telemetry.addData("intaking?", taking);
             telemetry.update();
         }
     }
