@@ -86,8 +86,8 @@ public class auto extends LinearOpMode {
         grabber  = hardwareMap.get(Servo.class, "grabber");
         tilt = hardwareMap.get(Servo.class, "tilt");
         arm = hardwareMap.get(Servo.class, "arm");
-        slide = hardwareMap.get(Servo.class, "slide");
-        intake = hardwareMap.get(DcMotor.class, "intake");
+//        slide = hardwareMap.get(Servo.class, "slide");
+//        intake = hardwareMap.get(DcMotor.class, "intake");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
@@ -105,13 +105,13 @@ public class auto extends LinearOpMode {
         // Step through each leg of the path, ensuring that the OpMode has not been stopped along the way.
         leftservo.setPosition(1);
         rightservo.setPosition(1);
-        grabber.setPosition(0);
+        grabber.setPosition(1);
 
         sleep(2000);
 
         leftwheel.setPower(0.3);
         rightwheel.setPower(0.3);
-        sleep(200);
+        sleep(500);
         leftwheel.setPower(0);
         rightwheel.setPower(0);
 
@@ -127,37 +127,28 @@ public class auto extends LinearOpMode {
         rightwheel.setPower(0);
 
         rightwheel.setPower(0.3);
-        sleep(100);
+        sleep(200);
         rightwheel.setPower(0);
 
-        sleep(300);
+        sleep(1000);
         arm.setPosition(0);
         sleep(2000);
-        tilt.setPosition(1);
+        tilt.setPosition(0.6);
         sleep(1000);
-        grabber.setPosition(1);
+        grabber.setPosition(0.8);
 
-        sleep(500);
-        tilt.setPosition(0);
+        sleep(1000);
+        tilt.setPosition(0.7);
+        arm.setPosition(0.5);
         sleep(1000);
         arm.setPosition(1);
+        sleep(100);
+        tilt.setPosition(1);
         sleep(2000);
 
         leftwheel.setPower(-0.4);
         sleep(500);
         leftwheel.setPower(0);
-
-
-
-
-
-
-
-
-
-
-
-
 
         telemetry.addData("Path", "Complete");
         telemetry.update();

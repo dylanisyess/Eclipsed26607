@@ -30,7 +30,7 @@ public class Teleop_final extends LinearOpMode {
     public Servo tilt;
     public Servo arm;
     private boolean grabbing;
-    public Servo slide;
+//    public Servo slide;
     public DcMotor intake;
     public double slide_position;
     public boolean taking;
@@ -50,7 +50,7 @@ public class Teleop_final extends LinearOpMode {
         grabber  = hardwareMap.get(Servo.class, "grabber");
         tilt = hardwareMap.get(Servo.class, "tilt");
         arm = hardwareMap.get(Servo.class, "arm");
-        slide = hardwareMap.get(Servo.class, "slide");
+//        slide = hardwareMap.get(Servo.class, "slide");
         intake = hardwareMap.get(DcMotor.class, "intake");
 
         // Set motor directions.
@@ -210,19 +210,19 @@ public class Teleop_final extends LinearOpMode {
                 }
             }
 
-            while (gamepad1.right_bumper) {
-                slide_position = slide.getPosition();
-                slide.setPosition(slide_position + 0.02);
-            }
-
-            while (gamepad1.left_bumper) {
-                slide_position = slide.getPosition();
-                slide.setPosition(slide_position - 0.02);
-            }
+//            while (gamepad1.right_bumper) {
+//                slide_position = slide.getPosition();
+//                slide.setPosition(slide_position + 0.02);
+//            }
+//
+//            while (gamepad1.left_bumper) {
+//                slide_position = slide.getPosition();
+//                slide.setPosition(slide_position - 0.02);
+//            }
 
             if (gamepad1.a) {
                 if (!taking) {
-                    intake.setPower(1);
+                    intake.setPower(0.5);
                     taking = true;
                 } else {
                     intake.setPower(0);
@@ -238,7 +238,7 @@ public class Teleop_final extends LinearOpMode {
             telemetry.addData("tilt Servo Position", tilt.getPosition());
             telemetry.addData("grabber Servo Position", grabber.getPosition());
             telemetry.addData("arm Servo Position", arm.getPosition());
-            telemetry.addData("Linear Slide Position", slide.getPosition());
+//            telemetry.addData("Linear Slide Position", slide.getPosition());
             telemetry.addData("intaking?", taking);
             telemetry.update();
             idle();
