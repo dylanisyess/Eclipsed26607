@@ -143,8 +143,8 @@ public class Teleop_final extends LinearOpMode {
                     if (!moving) {
                         leftservo.setPosition(0.5);
                         rightservo.setPosition(0.5);
-                        leftwheel.setPower(0.4);
-                        rightwheel.setPower(0.4);
+                        leftwheel.setPower(0.6);
+                        rightwheel.setPower(0.6);
                     } else {
                         leftwheel.setPower(0);
                         rightwheel.setPower(0);
@@ -155,8 +155,8 @@ public class Teleop_final extends LinearOpMode {
                     if (!moving) {
                         leftservo.setPosition(0.5);
                         rightservo.setPosition(0.5);
-                        leftwheel.setPower(-0.4);
-                        rightwheel.setPower(-0.4);
+                        leftwheel.setPower(-0.6);
+                        rightwheel.setPower(-0.6);
                     } else {
                         leftwheel.setPower(0);
                         rightwheel.setPower(0);
@@ -167,8 +167,8 @@ public class Teleop_final extends LinearOpMode {
                     if (!moving) {
                         leftservo.setPosition(0);
                         rightservo.setPosition(0);
-                        leftwheel.setPower(0.4);
-                        rightwheel.setPower(0.4);
+                        leftwheel.setPower(0.6);
+                        rightwheel.setPower(0.6);
                     } else {
                         leftwheel.setPower(0);
                         rightwheel.setPower(0);
@@ -179,8 +179,8 @@ public class Teleop_final extends LinearOpMode {
                     if (!moving) {
                         leftservo.setPosition(1);
                         rightservo.setPosition(1);
-                        leftwheel.setPower(0.4);
-                        rightwheel.setPower(0.4);
+                        leftwheel.setPower(0.6);
+                        rightwheel.setPower(0.6);
                     } else {
                         leftwheel.setPower(0);
                         rightwheel.setPower(0);
@@ -190,39 +190,33 @@ public class Teleop_final extends LinearOpMode {
 
 
             if (gamepad1.x) {
-                arm.setPosition(0.7);
-                tilt.setPosition(0);
+                tilt.setPosition(0.4);
+                sleep(100);
+                arm.setPosition(0.5);
+                sleep(100);
+                tilt.setPosition(0.7);
+                arm.setPosition(0);
             }
 
             if (gamepad1.y) {
                 arm.setPosition(0);
-                tilt.setPosition(0.5);
+                tilt.setPosition(0.1);
             }
 
 
             if (gamepad1.b) {
                 if (!grabbing) {
-                    grabber.setPosition(0);
+                    grabber.setPosition(0.5);
                     grabbing = true;
                 } else {
-                    grabber.setPosition(1);
+                    grabber.setPosition(0);
                     grabbing = false;
                 }
             }
 
-//            while (gamepad1.right_bumper) {
-//                slide_position = slide.getPosition();
-//                slide.setPosition(slide_position + 0.02);
-//            }
-//
-//            while (gamepad1.left_bumper) {
-//                slide_position = slide.getPosition();
-//                slide.setPosition(slide_position - 0.02);
-//            }
-
             if (gamepad1.a) {
                 if (!taking) {
-                    intake.setPower(0.5);
+                    intake.setPower(1);
                     taking = true;
                 } else {
                     intake.setPower(0);

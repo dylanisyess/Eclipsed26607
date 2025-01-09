@@ -19,6 +19,13 @@ public class tank_drive extends LinearOpMode {
     public double tilt_position;
     public Servo arm;
     public double arm_position;
+    private boolean grabbing;
+    //    public Servo slide;
+    public DcMotor intake;
+    public double slide_position;
+    public boolean taking;
+    public Servo leftservo;
+    public Servo rightservo;
 
     @Override
     public void runOpMode() {
@@ -31,6 +38,10 @@ public class tank_drive extends LinearOpMode {
         grabber  = hardwareMap.get(Servo.class, "grabber");
         tilt = hardwareMap.get(Servo.class, "tilt");
         arm = hardwareMap.get(Servo.class, "arm");
+        intake = hardwareMap.get(DcMotor.class, "intake");
+        leftservo = hardwareMap.get(Servo.class, "leftservo");
+        rightservo = hardwareMap.get(Servo.class, "rightservo");
+
 
         // Set motor directions.
         leftwheel.setDirection(DcMotor.Direction.REVERSE);
@@ -50,45 +61,63 @@ public class tank_drive extends LinearOpMode {
             double leftPower;
             double rightPower;
 
-            tilt.setPosition(0.5);
-            grabber.setPosition(0.5);
-            arm.setPosition(0.3);
+            leftservo.setPosition(0.5);
+            rightservo.setPosition(0.5);
 
             // Map the joystick inputs to motor power
-            leftPower  = -gamepad1.left_stick_y;
-            rightPower = -gamepad1.right_stick_y;
+            leftPower  = -gamepad1.left_stick_y * 0.8;
+            rightPower = -gamepad1.right_stick_y * 0.8;
 
             // Send calculated power to wheels
             leftwheel.setPower(leftPower);
             rightwheel.setPower(rightPower);
 
-            while (gamepad1.y) {
-                tilt_position = tilt.getPosition();
-                tilt.setPosition(tilt_position + 0.03);
-            }
-
-            while (gamepad1.a) {
-                tilt_position = tilt.getPosition();
-                tilt.setPosition(tilt_position - 0.03);
-            }
-
             if (gamepad1.x) {
-                grabber.setPosition(0);
+                tilt.setPosition(0.2);
+                sleep(100);
+                arm.setPosition(0.5);
+                sleep(100);
+                arm.setPosition(1);
+                sleep(700);
+                tilt.setPosition(0.7);
+                arm.setPosition(1);
             }
+
+            if (gamepad1.y) {
+                arm.setPosition(0);
+                tilt.setPosition(0);
+            }
+
 
             if (gamepad1.b) {
-                grabber.setPosition(1);
+                if (!grabbing) {
+                    grabber.setPosition(0.9);
+                    grabbing = true;
+                } else {
+                    grabber.setPosition(0);
+                    grabbing = false;
+                }
             }
 
-            while (gamepad1.right_bumper) {
-                arm_position = arm.getPosition();
-                arm.setPosition(arm_position + 0.03);
+            if (gamepad1.a) {
+                if (!taking) {
+                    intake.setPower(1);
+                    taking = true;
+                } else {
+                    intake.setPower(0);
+                    taking = false;
+                }
             }
 
-            while (gamepad1.right_bumper) {
-                arm_position = arm.getPosition();
-                arm.setPosition(arm_position - 0.03);
+            if (gamepad1.dpad_down) {
+                intake.setPower(-1);
             }
+
+            if (gamepad1.dpad_up) {
+                leftservo.setPosition(0.5);
+                rightservo.setPosition(0.5);
+            }
+
 
             // Telemetry to display key data
             telemetry.addData("Status", "Run Time: " + runtime.toString());
