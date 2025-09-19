@@ -12,44 +12,13 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 @TeleOp(name="Swerve_drive", group="Linear OpMode")
 // @Disabled
 public class Swerve_drive extends LinearOpMode {
-
-    // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
-    public DcMotor leftwheel = null;
-    public DcMotor rightwheel = null;
-    public Servo leftservo;
-    public Servo rightservo;
-    public double rightpodposition;
-    public double leftpodposition;
-    public double leftpoddirection;
-    public boolean rightpoddirection;
-    public double left_theta, right_theta, prev_left_theta, prev_right_theta;
-    public double left_magnitude, right_magnitude;
-    public double left_forward, right_forward;
-    public boolean moving;
-
-    public double magnitude_gain = 0.5;
-    public float rightwheelposition;
+    private final Robot Robot = new Robot();
 
     //    @Override
     public void runOpMode() {
+        robot.init(hardwareMap)
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-
-        // Initialize the hardware variables.
-        leftwheel = hardwareMap.get(DcMotor.class, "leftwheel");
-        rightwheel = hardwareMap.get(DcMotor.class, "rightwheel");
-        leftservo = hardwareMap.get(Servo.class, "leftservo");
-        rightservo = hardwareMap.get(Servo.class, "rightservo");
-
-        // Set motor directions.
-        leftwheel.setDirection(DcMotor.Direction.REVERSE);
-        rightwheel.setDirection(DcMotor.Direction.FORWARD);
-
-        // Set servo directions (keep default).
-        leftservo.setDirection(Servo.Direction.FORWARD);
-        rightservo.setDirection(Servo.Direction.FORWARD);
-
 
         // Wait for the game to start (driver presses START).
         waitForStart();
