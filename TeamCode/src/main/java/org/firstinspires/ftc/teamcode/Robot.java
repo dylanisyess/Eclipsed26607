@@ -74,7 +74,8 @@ public class Robot {
         _appContext = hardwareMap.appContext;
        
        for (DcMotorEx motor : motors) {
-            motor.setZeroPowerBehavior(zeroPowerBehavior.BRAKE);
+            motor.setZeroPowerBehavior(DcMotor.setDriveZeroPowerBehavior.BRAKE);
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER)
         }
 
     }
@@ -87,7 +88,7 @@ public class Robot {
 
     void resetDrive() {
         setDriveMode(RunMode.STOP_AND_RESET_ENCODER);
-        setDriveMode(RunMode.RUN_USING_ENCODER);
+        setDriveMode(RunMode.RUN_WITHOUT_ENCODER);
         setDriveZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
     }
 

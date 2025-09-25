@@ -67,15 +67,6 @@ public class Swerve_drive extends LinearOpMode {
                 prev_left_theta = left_theta;
             }
 
-//            telemetry.addData("Left stick x", leftStickX);
-//            telemetry.addData("Left stick y", leftStickY);
-//            telemetry.addData("Right Stick x", rightStickX);
-//            telemetry.addData("Right Stick y", rightStickY);
-//            telemetry.addData("Left stick theta", left_theta);
-//            telemetry.addData("Right Stick theta", right_theta);
-//            telemetry.addData("Left stick mag", left_magnitude);
-//            telemetry.addData("Right Stick mag", right_magnitude);
-
             left_forward = 1.0;
             right_forward = 1.0;
             if (leftjoystickactive) {
