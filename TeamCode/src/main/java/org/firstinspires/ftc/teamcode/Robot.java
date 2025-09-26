@@ -6,6 +6,7 @@ import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot.LogoFacingDirection;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot.UsbFacingDirection;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior;
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction;
@@ -14,6 +15,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
@@ -23,11 +25,11 @@ import java.util.List;
 
 public class Robot {
     public DcMotorEx frontLeft, frontRight, backLeft, backRight;
-    public Servo frontLeftServo, frontRightServo, backLeftServo, backRightservo;
+    public Servo frontLeftServo, frontRightServo, backLeftServo, backRightServo;
     public DigitalChannel limitSwitch;
     private List<DcMotorEx> motors;
     private Context _appContext;
-    private ElapsedTime runtime = new ElapsedTime();
+    public ElapsedTime runtime = new ElapsedTime();
     public double rightpodposition;
     public double leftpodposition;
     public boolean leftpoddirection;
@@ -72,45 +74,23 @@ public class Robot {
         imu.resetYaw();
 
         _appContext = hardwareMap.appContext;
-       
-       for (DcMotorEx motor : motors) {
-            motor.setZeroPowerBehavior(DcMotor.setDriveZeroPowerBehavior.BRAKE);
-            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER)
+
+        for (DcMotorEx motor : motors) {
+            motor.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
+            motor.setMode(RunMode.RUN_WITHOUT_ENCODER);
         }
 
     }
 
+    public void swerve_drive(double LY, double LX) {
+        left_theta = -Math.atan2(LY, LX);
+        left_magnitude = Math.sqrt(Math.pow(LY, 2.0) + Math.pow(LX, 2.0));
+    }
 
     double getHeading() {
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
         return orientation.getYaw(AngleUnit.DEGREES);
     }
-
-    void resetDrive() {
-        setDriveMode(RunMode.STOP_AND_RESET_ENCODER);
-        setDriveMode(RunMode.RUN_WITHOUT_ENCODER);
-        setDriveZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
-    }
-
-
-    void setDriveTarget(double distance, boolean moveSideway) {
-        // Determine new target position, and pass to motor controller
-        int moveCounts = (int) (distance * COUNTS_PER_INCH);
-
-        int dirFL = moveSideway ? -1 : 1;
-        int dirFR = 1;
-        int dirRL = 1;
-        int dirRR = moveSideway ? -1 : 1;
-
-        int leftFrontTarget = leftwheel.getCurrentPosition() + moveCounts * dirFL;
-        int rightFrontTarget = rightwheel.getCurrentPosition() + moveCounts * dirFR;
-
-        // Set Target and Turn On RUN_TO_POSITION
-        leftwheel.setTargetPosition(leftFrontTarget);
-        rightwheel.setTargetPosition(rightFrontTarget);
-    }
-
-    boolean isDriveBusy() {
-        return leftwheel.isBusy() && rightwheel.isBusy();
-    }
 }
+
+//

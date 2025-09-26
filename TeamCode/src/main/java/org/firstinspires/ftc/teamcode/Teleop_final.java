@@ -9,69 +9,27 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
-@TeleOp(name="Teleop final", group="Linear OpMode")
+@TeleOp(name="Teleop_final", group="Linear OpMode")
 // @Disabled
 public class Teleop_final extends LinearOpMode {
-
-    // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
-    public DcMotor leftwheel = null;
-    public DcMotor rightwheel = null;
-    public Servo leftservo;
-    public Servo rightservo;
-    public double rightpodposition;
-    public double leftpodposition;
-    public double left_theta, right_theta, prev_left_theta, prev_right_theta;
-    public double left_magnitude, right_magnitude;
-    public double left_forward, right_forward;
-    public boolean moving;
-
-    public Servo grabber;
-    public Servo tilt;
-    public Servo arm;
-    private boolean grabbing;
-//    public Servo slide;
-    public DcMotor intake;
-    public double slide_position;
-    public boolean taking;
-
-    public double magnitude_gain = 0.5;
+    private final Robot Robot = new Robot();
 
     //    @Override
     public void runOpMode() {
+        Robot.init(hardwareMap);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        // Initialize the hardware variables.
-        leftwheel = hardwareMap.get(DcMotor.class, "leftwheel");
-        rightwheel = hardwareMap.get(DcMotor.class, "rightwheel");
-        leftservo = hardwareMap.get(Servo.class, "leftservo");
-        rightservo = hardwareMap.get(Servo.class, "rightservo");
-        grabber  = hardwareMap.get(Servo.class, "grabber");
-        tilt = hardwareMap.get(Servo.class, "tilt");
-        arm = hardwareMap.get(Servo.class, "arm");
-//        slide = hardwareMap.get(Servo.class, "slide");
-        intake = hardwareMap.get(DcMotor.class, "intake");
-
-        // Set motor directions.
-        leftwheel.setDirection(DcMotor.Direction.REVERSE);
-        rightwheel.setDirection(DcMotor.Direction.FORWARD);
-
-        // Set servo directions (keep default).
-        leftservo.setDirection(Servo.Direction.FORWARD);
-        rightservo.setDirection(Servo.Direction.FORWARD);
-
-
         // Wait for the game to start (driver presses START).
         waitForStart();
-        runtime.reset();
+        Robot.runtime.reset();
 
         // Set the initial servo positions to neutral (mid-point).
-        leftservo.setPosition(0.5);
-        rightservo.setPosition(0.5);
-        moving = false;
-        taking = false;
-        grabbing = false;
+        Robot.frontLeftServo.setPosition(0.5);
+        Robot.frontLeftServo.setPosition(0.5);
+        Robot.frontLeftServo.setPosition(0.5);
+        Robot.frontLeftServo.setPosition(0.5);
+        Robot.moving = false;
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
@@ -118,6 +76,7 @@ public class Teleop_final extends LinearOpMode {
                     left_forward = -1.0;
                     left_theta = left_theta * -1;
                 } else {
+                    // left_theta = (left_theta - Math.PI/2) * -1 + Math.PI/2 ;
                     left_theta = Math.PI - left_theta;
                 }
                 if (right_theta < 0) {
@@ -125,9 +84,13 @@ public class Teleop_final extends LinearOpMode {
                     right_theta = right_theta * -1;
                 }
                 leftservo.setPosition(left_theta / Math.PI);
+                // synchronzied with left joystick
                 rightservo.setPosition(left_theta / Math.PI);
+                // independent
+                // rightservo.setPosition(right_theta / Math.PI);
 
                 leftwheel.setPower(left_forward * left_magnitude * magnitude_gain);
+                // synchronzied with left joystick
                 rightwheel.setPower(left_forward * left_magnitude * magnitude_gain);
             } else if (right_magnitude > 0.2 && !leftjoystickactive) {
                 magnitude_gain = 0.5;
@@ -143,8 +106,8 @@ public class Teleop_final extends LinearOpMode {
                     if (!moving) {
                         leftservo.setPosition(0.5);
                         rightservo.setPosition(0.5);
-                        leftwheel.setPower(0.6);
-                        rightwheel.setPower(0.6);
+                        leftwheel.setPower(0.4);
+                        rightwheel.setPower(0.4);
                     } else {
                         leftwheel.setPower(0);
                         rightwheel.setPower(0);
@@ -155,8 +118,8 @@ public class Teleop_final extends LinearOpMode {
                     if (!moving) {
                         leftservo.setPosition(0.5);
                         rightservo.setPosition(0.5);
-                        leftwheel.setPower(-0.6);
-                        rightwheel.setPower(-0.6);
+                        leftwheel.setPower(-0.4);
+                        rightwheel.setPower(-0.4);
                     } else {
                         leftwheel.setPower(0);
                         rightwheel.setPower(0);
@@ -167,8 +130,8 @@ public class Teleop_final extends LinearOpMode {
                     if (!moving) {
                         leftservo.setPosition(0);
                         rightservo.setPosition(0);
-                        leftwheel.setPower(0.6);
-                        rightwheel.setPower(0.6);
+                        leftwheel.setPower(0.4);
+                        rightwheel.setPower(0.4);
                     } else {
                         leftwheel.setPower(0);
                         rightwheel.setPower(0);
@@ -179,8 +142,8 @@ public class Teleop_final extends LinearOpMode {
                     if (!moving) {
                         leftservo.setPosition(1);
                         rightservo.setPosition(1);
-                        leftwheel.setPower(0.6);
-                        rightwheel.setPower(0.6);
+                        leftwheel.setPower(0.4);
+                        rightwheel.setPower(0.4);
                     } else {
                         leftwheel.setPower(0);
                         rightwheel.setPower(0);
@@ -189,51 +152,13 @@ public class Teleop_final extends LinearOpMode {
             }
 
 
-            if (gamepad1.x) {
-                tilt.setPosition(0.4);
-                sleep(100);
-                arm.setPosition(0.5);
-                sleep(100);
-                tilt.setPosition(0.7);
-                arm.setPosition(0);
-            }
-
-            if (gamepad1.y) {
-                arm.setPosition(0);
-                tilt.setPosition(0.1);
-            }
-
-
-            if (gamepad1.b) {
-                if (!grabbing) {
-                    grabber.setPosition(0.5);
-                    grabbing = true;
-                } else {
-                    grabber.setPosition(0);
-                    grabbing = false;
-                }
-            }
-
-            if (gamepad1.a) {
-                if (!taking) {
-                    intake.setPower(1);
-                    taking = true;
-                } else {
-                    intake.setPower(0);
-                    taking = false;
-                }
-            }
+            // independent
+            // rightwheel.setPower(right_forward*right_magnitude * magnitude_gain);
 
 
             telemetry.addData("Left Servo Position", leftservo.getPosition());
             telemetry.addData("Right Servo Position", rightservo.getPosition());
             telemetry.addData("moving?", moving );
-            telemetry.addData("-------------------------------", null);
-            telemetry.addData("tilt Servo Position", tilt.getPosition());
-            telemetry.addData("grabber Servo Position", grabber.getPosition());
-            telemetry.addData("arm Servo Position", arm.getPosition());
-//            telemetry.addData("Linear Slide Position", slide.getPosition());
-            telemetry.addData("intaking?", taking);
             telemetry.update();
             idle();
 
